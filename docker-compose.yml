@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    container_name: ecommerce-app
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/main/resources/templates:/app/BOOT-INF/classes/templates
+      - ./src/main/resources/static:/app/BOOT-INF/classes/static
+      - ./h2-data:/data
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge

@@ -1,0 +1,166 @@
+:root {
+
+  --bs-primary: #2e7d32;
+  --bs-primary-rgb: 46, 125, 50;
+
+  --bs-secondary: #6dbb63;
+  --bs-secondary-rgb: 109, 187, 99;
+
+  --bs-success: #4caf50;
+  --bs-success-rgb: 76, 175, 80;
+
+  --bs-info: #26a69a;
+  --bs-info-rgb: 38, 166, 154;
+
+  --bs-warning: #ffb300;
+  --bs-warning-rgb: 255, 179, 0;
+
+  --bs-danger: #f57c00;
+  --bs-danger-rgb: 245, 124, 0;
+
+  --bs-light: #f1f8e9;
+  --bs-light-rgb: 241, 248, 233;
+  --bs-dark: #1b5e20;
+  --bs-dark-rgb: 27, 94, 32;
+
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+  --bs-body-color: #333333;
+  --bs-body-bg: #ffffff;
+
+
+  --bs-border-radius: 0.75rem;
+  --bs-border-radius-sm: 0.5rem;
+  --bs-border-radius-lg: 1rem;
+  --bs-border-radius-xl: 1.5rem;
+
+  --bs-box-shadow: 0 0.5rem 1rem rgba(46, 125, 50, 0.15);
+  --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(46, 125, 50, 0.075);
+  --bs-box-shadow-lg: 0 1rem 3rem rgba(46, 125, 50, 0.175);
+
+  --bs-link-color: var(--bs-primary);
+  --bs-link-hover-color: #1b5e20;
+}
+
+.navbar.bg-primary {
+  background: linear-gradient(135deg, var(--bs-primary), #1b5e20) !important;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: #1b5e20;
+  --bs-btn-hover-border-color: #1b5e20;
+  --bs-btn-active-bg: #0d3c10;
+  --bs-btn-active-border-color: #0d3c10;
+  --bs-btn-disabled-bg: var(--bs-primary);
+  --bs-btn-disabled-border-color: var(--bs-primary);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: var(--bs-primary);
+  --bs-btn-hover-border-color: var(--bs-primary);
+  --bs-btn-active-bg: var(--bs-primary);
+  --bs-btn-active-border-color: var(--bs-primary);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--bs-success);
+  --bs-btn-border-color: var(--bs-success);
+  --bs-btn-hover-bg: #3d8b40;
+  --bs-btn-hover-border-color: #3d8b40;
+}
+
+.card {
+  border: 1px solid rgba(109, 187, 99, 0.2);
+  box-shadow: var(--bs-box-shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--bs-box-shadow);
+  border-color: rgba(109, 187, 99, 0.4);
+  transform: translateY(-4px);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+}
+
+.text-danger {
+  color: #d32f2f !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--bs-success) !important;
+}
+
+.success-toast {
+  background: linear-gradient(135deg, var(--bs-success), #66bb6a) !important;
+}
+
+.bg-light {
+  background-color: var(--bs-light) !important;
+}
+
+.green-gradient-bg {
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+}
+
+.leaf-decoration {
+  position: relative;
+}
+
+.leaf-decoration::after {
+  content: "🍃";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
+
+.eco-badge {
+  background: linear-gradient(to right, #4caf50, #8bc34a);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.price-amount {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.price-unit {
+    color: var(--bs-success);
+    font-size: 0.9em;
+}
+
+
+.product-detail-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --bs-border-radius: 0.5rem;
+    --bs-border-radius-lg: 0.75rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+}

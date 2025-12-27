@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        /* 添加一些自定义样式 */
+        .alert-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1050;
+            max-width: 400px;
+        }
+        .alert {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        /* 删除确认模态框样式 */
+        .modal-delete-confirm {
+            max-width: 400px;
+            margin: 30px auto;
+        }
+        .modal-delete-confirm .modal-content {
+            border-radius: 12px;
+            border: none;
+        }
+        .modal-delete-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+            justify-content: center;
+            padding: 25px 25px 10px;
+        }
+        .modal-delete-confirm .modal-body {
+            text-align: center;
+            padding: 20px;
+        }
+        .modal-delete-confirm .modal-footer {
+            border: none;
+            justify-content: center;
+            padding: 0 25px 25px;
+        }
+        .modal-delete-confirm .icon-box {
+            color: #f15e5e;
+            width: 80px;
+            height: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #fde8e8;
+            margin-bottom: 20px;
+            font-size: 30px;
+        }
+        .modal-delete-confirm .btn-confirm {
+            background: #dc3545;
+            color: white;
+            border-radius: 6px;
+            padding: 10px 30px;
+            border: none;
+            font-weight: 500;
+        }
+        .modal-delete-confirm .btn-confirm:hover {
+            background: #c82333;
+        }
+        .modal-delete-confirm .btn-cancel {
+            background: #6c757d;
+            color: white;
+            border-radius: 6px;
+            padding: 10px 30px;
+            border: none;
+            font-weight: 500;
+        }
+        .modal-delete-confirm .btn-cancel:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/seller">卖家中心</a>
+        <div class="navbar-nav">
+            <a class="nav-link active" href="/seller/products">商品管理</a>
+            <a class="nav-link" href="/seller/orders">订单管理</a>
+            <a class="nav-link" href="/seller/reports">销售报表</a>
+            <a class="nav-link" href="/seller/customers">客户管理</a>
+            <a class="nav-link text-light" href="/products">返回商品页</a>
+        </div>
+    </div>
+</nav>
+
+<div class="alert-container" id="alertContainer">
+</div>
+
+<div class="container mt-4">
+    <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show mb-3">
+        <i class="bi bi-check-circle me-2"></i>
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${error != null}" class="alert alert-danger alert-dismissible fade show mb-3">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <span th:utext="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-box"></i> 商品管理</h2>
+        <a href="/seller/products/add" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> 添加商品
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>商品图片</th>
+                <th>商品名称</th>
+                <th>价格</th>
+                <th>库存</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td>
+                    <img th:src="${product.imageUrl ?: '/images/default-product.jpg'}"
+                         width="60" height="60" style="object-fit: cover;"
+                         alt="商品图片" class="rounded">
+                </td>
+                <td th:text="${product.name}"></td>
+                <td th:text="'¥' + ${#numbers.formatDecimal(product.price, 1, 2)}"></td>
+                <td>
+                    <span th:text="${product.stock}"></span>
+                    <span th:if="${product.stock <= 10}" class="badge bg-warning ms-1">低库存</span>
+                </td>
+                <td>
+                    <span th:if="${product.available}" class="badge bg-success">上架</span>
+                    <span th:unless="${product.available}" class="badge bg-secondary">下架</span>
+                </td>
+                <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd')}"></td>
+                <td>
+                    <a th:href="@{/seller/products/edit/{id}(id=${product.id})}"
+                       class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil"></i> 编辑
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger btn-delete"
+                            th:attr="data-product-name=${product.name}, data-product-id=${product.id}">
+                        <i class="bi bi-trash"></i> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-delete-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p id="deleteConfirmText">确定要删除商品吗？</p>
+                <p class="text-muted small">注意：如果该商品已被订单引用，删除操作将失败。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
+                <!-- 修改1：在表单中添加隐藏的input来传递productId -->
+                <form method="post" id="deleteForm" action="/seller/products/delete" style="display: inline;">
+                    <input type="hidden" name="id" id="deleteProductId">
+                    <button type="submit" class="btn btn-confirm">确认删除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const successParam = urlParams.get('success');
+        const errorParam = urlParams.get('error');
+
+        if (successParam) {
+            showAlert('success', decodeURIComponent(successParam));
+        }
+        if (errorParam) {
+            showAlert('danger', decodeURIComponent(errorParam));
+        }
+
+        if (successParam || errorParam) {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('success');
+            newUrl.searchParams.delete('error');
+
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        const alerts = document.querySelectorAll('.alert:not(.alert-container .alert)');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            }, 5000);
+        });
+
+        // 删除商品确认逻辑
+        const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+        const deleteForm = document.getElementById('deleteForm');
+        const deleteProductIdInput = document.getElementById('deleteProductId');
+
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product-name');
+                const productId = this.getAttribute('data-product-id');
+
+                // 更新模态框中的商品名称
+                const deleteConfirmText = document.getElementById('deleteConfirmText');
+                deleteConfirmText.innerHTML = `确定要删除商品"${productName}"吗？`;
+
+                // 修改2：设置隐藏input的值，而不是修改form的action
+                deleteProductIdInput.value = productId;
+
+                deleteConfirmModal.show();
+            });
+        });
+
+        // 修改3：删除成功后自动关闭模态框并显示成功消息
+        deleteForm.addEventListener('submit', function(e) {
+            // 让表单正常提交，服务器会处理重定向
+            deleteConfirmModal.hide();
+        });
+    });
+
+    function showAlert(type, message) {
+        const alertContainer = document.getElementById('alertContainer');
+
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+            <i class="bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        alertContainer.appendChild(alertDiv);
+
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                const bsAlert = new bootstrap.Alert(alertDiv);
+                bsAlert.close();
+            }
+        }, 5000);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.alert').forEach(alert => {
+                const bsAlert = bootstrap.Alert.getInstance(alert);
+                if (bsAlert) {
+                    bsAlert.close();
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
