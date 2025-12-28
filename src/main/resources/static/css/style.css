@@ -99,38 +99,12 @@
   background-color: var(--bs-success) !important;
 }
 
-.success-toast {
-  background: linear-gradient(135deg, var(--bs-success), #66bb6a) !important;
-}
-
 .bg-light {
   background-color: var(--bs-light) !important;
 }
 
-.green-gradient-bg {
-  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
-}
-
 .leaf-decoration {
   position: relative;
-}
-
-.leaf-decoration::after {
-  content: "🍃";
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.6;
-}
-
-.eco-badge {
-  background: linear-gradient(to right, #4caf50, #8bc34a);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: bold;
 }
 
 .price-amount {
@@ -153,6 +127,168 @@
     border-radius: 8px;
 }
 
+/* ====== 购物车页面样式 ====== */
+.summary-card { background: #f8f9fa; border-radius: 10px; padding: 20px; }
+.btn-checkout { padding: 12px; font-size: 18px; }
+
+/* ====== 登录页面样式 ====== */
+.login-card { border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border: none; overflow: hidden; }
+.login-header { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 25px; text-align: center; }
+.login-body { padding: 30px; }
+.btn-login {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    border: none; padding: 12px; font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-login:hover {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+/* ====== 注册页面样式 ====== */
+.register-container {
+    max-width: 500px; margin: 50px auto; padding: 30px;
+    border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    background-color: white;
+}
+.btn-register {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    border: none; padding: 12px; font-weight: 600; font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+.btn-register:hover {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+.role-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+.role-option {
+    flex: 1; text-align: center; padding: 15px;
+    border: 2px solid #dee2e6; border-radius: 8px; cursor: pointer;
+    transition: all 0.3s ease;
+}
+.role-option:hover { border-color: #2e7d32; background-color: #f1f8e9; }
+.role-option.selected { border-color: #2e7d32; background-color: #e8f5e9; font-weight: bold; }
+
+/* ====== 支付页面样式 ====== */
+.payment-container {
+    max-width: 800px; margin: 30px auto; background: white;
+    border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); overflow: hidden;
+}
+.payment-header { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 30px; text-align: center; }
+.payment-body { padding: 40px; }
+.amount-display { text-align: center; margin: 30px 0; }
+.amount-value { font-size: 48px; font-weight: bold; color: #dc3545; }
+.qrcode-container {
+    text-align: center; padding: 30px; background: #f8f9fa;
+    border-radius: 10px; margin: 30px 0;
+}
+
+/* ====== 商品列表页面样式 ====== */
+.product-card {
+    transition: all 0.3s ease; height: 100%; cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.product-img { height: 200px; object-fit: cover; }
+.toast-custom {
+    position: fixed; top: 80px; right: 20px; z-index: 1050; min-width: 300px;
+}
+.btn-add-to-cart { width: 100%; padding: 10px; font-weight: 500; }
+.login-toast { background-color: #dc3545; color: white; }
+
+/* ====== 卖家商品管理页面样式 ====== */
+.alert-container {
+    position: fixed; top: 80px; right: 20px; z-index: 1050;
+    max-width: 400px;
+}
+.modal-delete-confirm { max-width: 400px; margin: 30px auto; }
+.modal-delete-confirm .modal-content { border-radius: 12px; border: none; }
+.modal-delete-confirm .modal-header { border-bottom: none; position: relative; justify-content: center; padding: 25px 25px 10px; }
+.modal-delete-confirm .modal-body { text-align: center; padding: 20px; }
+.modal-delete-confirm .modal-footer { border: none; justify-content: center; padding: 0 25px 25px; }
+.modal-delete-confirm .icon-box {
+    color: #f15e5e; width: 80px; height: 80px; display: inline-flex;
+    align-items: center; justify-content: center; border-radius: 50%;
+    background: #fde8e8; margin-bottom: 20px; font-size: 30px;
+}
+.modal-delete-confirm .btn-confirm {
+    background: #dc3545; color: white; border-radius: 6px;
+    padding: 10px 30px; border: none; font-weight: 500;
+}
+.modal-delete-confirm .btn-confirm:hover { background: #c82333; }
+.modal-delete-confirm .btn-cancel {
+    background: #6c757d; color: white; border-radius: 6px;
+    padding: 10px 30px; border: none; font-weight: 500;
+}
+.modal-delete-confirm .btn-cancel:hover { background: #5a6268; }
+
+/* ====== 销售报表页面样式 ====== */
+.stat-card { border: none; border-radius: 10px; color: white; margin-bottom: 20px; }
+.stat-card .card-body { padding: 20px; }
+.stat-card .stat-icon { font-size: 2.5rem; opacity: 0.8; }
+.stat-card .stat-value { font-size: 2rem; font-weight: bold; }
+.chart-container {
+    background: white; border-radius: 10px; padding: 20px;
+    margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* ====== 客户详情页面样式 ====== */
+.customer-info-card { border: 1px solid rgba(0,0,0,0.125); border-radius: 10px; }
+.order-table th { background-color: #f8f9fa; }
+.badge-status { font-size: 0.85em; }
+.empty-state { text-align: center; padding: 40px 20px; color: #6c757d; }
+.empty-state i { font-size: 3rem; margin-bottom: 15px; display: block; }
+.activity-log .log-item {
+    padding: 15px; border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+.activity-log .log-item:hover { background-color: #f8f9fa; }
+
+/* ====== 订单卡片样式 ====== */
+.order-card {
+    border: 1px solid #dee2e6; border-radius: 10px;
+    padding: 20px; margin-bottom: 20px; transition: all 0.3s ease;
+}
+.order-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.order-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 15px;
+    padding-bottom: 15px; border-bottom: 1px solid #eee;
+}
+.order-items { margin-top: 15px; }
+.item-row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px dashed #f0f0f0;
+}
+.item-name { flex: 2; }
+.item-quantity, .item-price { flex: 1; text-align: right; }
+
+/* ====== 模态框通用样式 ====== */
+.modal-confirm { max-width: 400px; margin: 30px auto; }
+.modal-confirm .modal-content { border-radius: 12px; border: none; }
+.modal-confirm .modal-header { border-bottom: none; position: relative; justify-content: center; padding: 25px 25px 10px; }
+.modal-confirm .modal-body { text-align: center; padding: 20px; }
+.modal-confirm .modal-footer { border: none; justify-content: center; padding: 0 25px 25px; }
+.modal-confirm .icon-box {
+    color: #f15e5e; width: 80px; height: 80px; display: inline-flex;
+    align-items: center; justify-content: center; border-radius: 50%;
+    background: #fde8e8; margin-bottom: 20px; font-size: 30px;
+}
+.modal-confirm .btn-confirm {
+    background: #dc3545; color: white; border-radius: 6px;
+    padding: 10px 30px; border: none; font-weight: 500;
+}
+.modal-confirm .btn-confirm:hover { background: #c82333; }
+.modal-confirm .btn-cancel {
+    background: #6c757d; color: white; border-radius: 6px;
+    padding: 10px 30px; border: none; font-weight: 500;
+}
+.modal-confirm .btn-cancel:hover { background: #5a6268; }
+
 @media (max-width: 768px) {
   :root {
     --bs-border-radius: 0.5rem;
@@ -162,5 +298,4 @@
   .card {
     margin-bottom: 1rem;
   }
-
 }

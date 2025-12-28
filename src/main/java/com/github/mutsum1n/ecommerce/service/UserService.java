@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
         user.setFullName(registerRequest.getFullName());
         user.setEmail(registerRequest.getEmail());
         user.setPhone(registerRequest.getPhone());
-        user.setRole(registerRequest.getRole()); // 使用注册时选择的角色
+        user.setRole(registerRequest.getRole());
 
         return userRepository.save(user);
     }

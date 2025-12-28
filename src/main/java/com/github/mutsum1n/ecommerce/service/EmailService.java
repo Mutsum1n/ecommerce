@@ -18,7 +18,7 @@ public class EmailService {
     @Value("${app.mail.from:noreply@ecommerce.com}")
     private String fromEmail;
 
-    @Value("${app.name:电商网站}")
+    @Value("${app.name:黄瓜网}")
     private String appName;
 
     public EmailService(JavaMailSender mailSender) {
@@ -57,11 +57,8 @@ public class EmailService {
                             "黄瓜网团队",
                     customerName, orderNumber, totalAmount, orderDate
             );
-
             message.setText(text);
-
             mailSender.send(mimeMessage);
-
         } catch (MessagingException e) {
             throw new RuntimeException("邮件发送失败", e);
         }

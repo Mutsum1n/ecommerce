@@ -50,15 +50,11 @@ public class OrderController {
                 return "redirect:/cart";
             }
 
-
             Order order = orderService.createOrderAndSendEmail(username, cartItems,
                     shippingAddress, paymentMethod);
-
             cartService.clearCart(username);
-
             return "redirect:/buyer?created=true";
         } catch (Exception e) {
-
             e.printStackTrace();
             return "redirect:/cart?error=create_failed";
         }

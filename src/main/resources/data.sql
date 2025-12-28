@@ -3,7 +3,7 @@
 -- 买家用户
 INSERT INTO users (id, username, password, full_name, email, phone, role, created_at, updated_at)
 VALUES
-(1, 'buyer', '$2a$10$BVuSir5tn3USI7Pg0NDy0e3fj21jyUS4AR2ECNkZuzx8cEQ0rOeKS', '测试买家', '2039714716@qq.com', '13800000001', 'BUYER', NOW(), NOW()),
+(1, 'buyer', '$2a$10$BVuSir5tn3USI7Pg0NDy0e3fj21jyUS4AR2ECNkZuzx8cEQ0rOeKS', '测试买家', 'buyer@test.com', '13800000001', 'BUYER', NOW(), NOW()),
 (2, 'seller', '$2a$10$BVuSir5tn3USI7Pg0NDy0e3fj21jyUS4AR2ECNkZuzx8cEQ0rOeKS', '测试卖家', 'seller@test.com', '13800000002', 'SELLER', NOW(), NOW()),
 (3, 'user1', '$2a$10$BVuSir5tn3USI7Pg0NDy0e3fj21jyUS4AR2ECNkZuzx8cEQ0rOeKS', '张三', 'user1@test.com', '13800000003', 'BUYER', NOW(), NOW()),
 (4, 'user2', '$2a$10$BVuSir5tn3USI7Pg0NDy0e3fj21jyUS4AR2ECNkZuzx8cEQ0rOeKS', '李四', 'user2@test.com', '13800000004', 'BUYER', NOW(), NOW());
@@ -22,7 +22,7 @@ VALUES
 INSERT INTO orders (id, order_number, user_id, total_amount, shipping_address, status, created_at, updated_at, payment_method, payment_status)
 VALUES
 (1, 'ORD2023122000001', 1, 3398.00, '北京市海淀区中关村大街1号', 'PAID', DATEADD('DAY', -5, NOW()), DATEADD('DAY', -5, NOW()), '微信支付', '已支付'),
-(2, 'ORD2023121900002', 3, 1299.00, '上海市浦东新区陆家嘴环路100号', 'SHIPPED', DATEADD('DAY', -3, NOW()), DATEADD('DAY', -1, NOW()), '支付宝', '已支付'),
+(2, 'ORD2023121900002', 3, 1299.00, '上海市浦东新区陆家嘴环路100号', 'SHIPPED', DATEADD('DAY', -3, NOW()), DATEADD('DAY', -1, NOW()), '微信支付', '已支付'),
 (3, 'ORD2023121800003', 4, 6999.00, '广州市天河区体育西路123号', 'DELIVERED', DATEADD('DAY', -7, NOW()), DATEADD('DAY', -2, NOW()), '微信支付', '已支付');
 
 -- 插入订单项

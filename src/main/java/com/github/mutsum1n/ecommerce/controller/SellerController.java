@@ -54,11 +54,9 @@ public class SellerController {
         Product product = productService.getProductById(id);
         String username = authentication.getName();
         User seller = userService.findByUsername(username);
-
         if (!product.getSeller().getId().equals(seller.getId())) {
             return "redirect:/seller/products";
         }
-
         model.addAttribute("product", product);
         return "seller/product-form";
     }
@@ -99,7 +97,6 @@ public class SellerController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "删除失败：" + e.getMessage());
         }
-
         return "redirect:/seller/products";
     }
 
@@ -116,7 +113,6 @@ public class SellerController {
         return "seller/index";
     }
 
-
     @PostMapping("/orders/{id}/status")
     public String updateOrderStatus(@PathVariable Long id,
                                     @RequestParam String status,
@@ -127,10 +123,8 @@ public class SellerController {
                 redirectAttributes.addFlashAttribute("error", "订单不存在");
                 return "redirect:/seller/orders";
             }
-
             OrderStatus orderStatus = OrderStatus.valueOf(status);
             orderService.updateOrderStatus(order, orderStatus);
-
             redirectAttributes.addFlashAttribute("success", "订单状态更新成功");
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", "无效的状态值: " + status);

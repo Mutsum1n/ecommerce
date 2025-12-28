@@ -6,77 +6,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="/css/style.css" rel="stylesheet">
-    <style>
-        /* 添加一些自定义样式 */
-        .alert-container {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1050;
-            max-width: 400px;
-        }
-        .alert {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-        /* 删除确认模态框样式 */
-        .modal-delete-confirm {
-            max-width: 400px;
-            margin: 30px auto;
-        }
-        .modal-delete-confirm .modal-content {
-            border-radius: 12px;
-            border: none;
-        }
-        .modal-delete-confirm .modal-header {
-            border-bottom: none;
-            position: relative;
-            justify-content: center;
-            padding: 25px 25px 10px;
-        }
-        .modal-delete-confirm .modal-body {
-            text-align: center;
-            padding: 20px;
-        }
-        .modal-delete-confirm .modal-footer {
-            border: none;
-            justify-content: center;
-            padding: 0 25px 25px;
-        }
-        .modal-delete-confirm .icon-box {
-            color: #f15e5e;
-            width: 80px;
-            height: 80px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #fde8e8;
-            margin-bottom: 20px;
-            font-size: 30px;
-        }
-        .modal-delete-confirm .btn-confirm {
-            background: #dc3545;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-delete-confirm .btn-confirm:hover {
-            background: #c82333;
-        }
-        .modal-delete-confirm .btn-cancel {
-            background: #6c757d;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-delete-confirm .btn-cancel:hover {
-            background: #5a6268;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -162,7 +91,6 @@
     </div>
 </div>
 
-<!-- 删除确认模态框 -->
 <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-delete-confirm">
         <div class="modal-content">
@@ -177,7 +105,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">取消</button>
-                <!-- 修改1：在表单中添加隐藏的input来传递productId -->
                 <form method="post" id="deleteForm" action="/seller/products/delete" style="display: inline;">
                     <input type="hidden" name="id" id="deleteProductId">
                     <button type="submit" class="btn btn-confirm">确认删除</button>
@@ -219,7 +146,6 @@
             }, 5000);
         });
 
-        // 删除商品确认逻辑
         const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
         const deleteForm = document.getElementById('deleteForm');
         const deleteProductIdInput = document.getElementById('deleteProductId');
@@ -229,20 +155,16 @@
                 const productName = this.getAttribute('data-product-name');
                 const productId = this.getAttribute('data-product-id');
 
-                // 更新模态框中的商品名称
                 const deleteConfirmText = document.getElementById('deleteConfirmText');
                 deleteConfirmText.innerHTML = `确定要删除商品"${productName}"吗？`;
 
-                // 修改2：设置隐藏input的值，而不是修改form的action
                 deleteProductIdInput.value = productId;
 
                 deleteConfirmModal.show();
             });
         });
 
-        // 修改3：删除成功后自动关闭模态框并显示成功消息
         deleteForm.addEventListener('submit', function(e) {
-            // 让表单正常提交，服务器会处理重定向
             deleteConfirmModal.hide();
         });
     });

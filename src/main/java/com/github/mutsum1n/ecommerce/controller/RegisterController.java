@@ -31,20 +31,16 @@ public class RegisterController {
                                BindingResult bindingResult,
                                Model model,
                                RedirectAttributes redirectAttributes) {
-
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
         try {
             userService.registerUser(registerRequest);
-
             redirectAttributes.addFlashAttribute("registerSuccess", true);
             redirectAttributes.addFlashAttribute("successMessage", "注册成功！");
             redirectAttributes.addFlashAttribute("registeredUsername", registerRequest.getUsername());
-
             return "redirect:/login";
-
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("registerRequest", registerRequest);

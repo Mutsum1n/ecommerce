@@ -2,118 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>支付页面 - 电商网站</title>
+    <title>支付页面 - 黄瓜网</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="/css/style.css" rel="stylesheet">
-    <style>
-        .payment-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .payment-header {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .payment-body { padding: 40px; }
-        .amount-display {
-            text-align: center;
-            margin: 30px 0;
-        }
-        .amount-value {
-            font-size: 48px;
-            font-weight: bold;
-            color: #dc3545;
-        }
-        .qrcode-container {
-            text-align: center;
-            padding: 30px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin: 30px 0;
-        }
-        .qrcode-img {
-            max-width: 300px;
-            max-height: 300px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            background: white;
-        }
-        .btn-pay {
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .modal-confirm {
-            max-width: 400px;
-            margin: 30px auto;
-        }
-        .modal-confirm .modal-content {
-            border-radius: 12px;
-            border: none;
-        }
-        .modal-confirm .modal-header {
-            border-bottom: none;
-            position: relative;
-            justify-content: center;
-            padding: 25px 25px 10px;
-        }
-        .modal-confirm .modal-body {
-            text-align: center;
-            padding: 20px;
-        }
-        .modal-confirm .modal-footer {
-            border: none;
-            justify-content: center;
-            padding: 0 25px 25px;
-        }
-        .modal-confirm .icon-box {
-            color: #f15e5e;
-            width: 80px;
-            height: 80px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #fde8e8;
-            margin-bottom: 20px;
-            font-size: 30px;
-        }
-        .modal-confirm .btn-confirm {
-            background: #dc3545;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-confirm .btn-confirm:hover {
-            background: #c82333;
-        }
-        .modal-confirm .btn-cancel {
-            background: #6c757d;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-confirm .btn-cancel:hover {
-            background: #5a6268;
-        }
-    </style>
 </head>
 <body style="background: #f8f9fa; min-height: 100vh;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="/products">电商网站</a>
+        <a class="navbar-brand" href="/products">黄瓜网</a>
         <div class="navbar-nav">
             <span class="nav-link text-light">欢迎，[[${username}]]</span>
             <a class="nav-link text-light" href="/logout">退出登录</a>

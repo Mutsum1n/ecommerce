@@ -2,83 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>我的购物车 - 电商网站</title>
+    <title>我的购物车 - 黄瓜网</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="/css/style.css" rel="stylesheet">
-    <style>
-        .summary-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .btn-checkout {
-            padding: 12px;
-            font-size: 18px;
-        }
-        .modal-confirm {
-            max-width: 400px;
-            margin: 30px auto;
-        }
-        .modal-confirm .modal-content {
-            border-radius: 12px;
-            border: none;
-        }
-        .modal-confirm .modal-header {
-            border-bottom: none;
-            position: relative;
-            justify-content: center;
-            padding: 25px 25px 10px;
-        }
-        .modal-confirm .modal-body {
-            text-align: center;
-            padding: 20px;
-        }
-        .modal-confirm .modal-footer {
-            border: none;
-            justify-content: center;
-            padding: 0 25px 25px;
-        }
-        .modal-confirm .icon-box {
-            color: #f15e5e;
-            width: 80px;
-            height: 80px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #fde8e8;
-            margin-bottom: 20px;
-            font-size: 30px;
-        }
-        .modal-confirm .btn-confirm {
-            background: #dc3545;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-confirm .btn-confirm:hover {
-            background: #c82333;
-        }
-        .modal-confirm .btn-cancel {
-            background: #6c757d;
-            color: white;
-            border-radius: 6px;
-            padding: 10px 30px;
-            border: none;
-            font-weight: 500;
-        }
-        .modal-confirm .btn-cancel:hover {
-            background: #5a6268;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="/products"><i class="bi bi-shop"></i> 电商网站</a>
+        <a class="navbar-brand" href="/products"><i class="bi bi-shop"></i> 黄瓜网</a>
         <div class="navbar-nav">
             <a class="nav-link" href="/products">商品列表</a>
             <a class="nav-link active" href="/cart">我的购物车</a>

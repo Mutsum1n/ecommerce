@@ -95,18 +95,14 @@ public class OrderService {
     @Transactional
     public Order createOrderAndSendEmail(String username, List<CartItem> cartItems,
                                          String shippingAddress, String paymentMethod) {
-        // 创建订单
         Order order = createOrderFromCart(username, cartItems, shippingAddress, paymentMethod);
 
-        // 获取用户信息
         User user = order.getUser();
 
-        // 检查邮箱是否为空
         if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
             return order;
         }
 
-        // 发送订单确认邮件
         try {
             String customerName = user.getFullName() != null ? user.getFullName() : user.getUsername();
             String totalAmount = "¥" + order.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP);

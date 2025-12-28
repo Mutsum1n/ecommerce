@@ -172,7 +172,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 自动关闭警告消息
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(alert => {
             setTimeout(() => {
@@ -181,7 +180,6 @@
             }, 5000);
         });
 
-        // 防止表单重复提交
         const forms = document.querySelectorAll('.status-action-form');
         forms.forEach(form => {
             form.addEventListener('submit', function(e) {

@@ -32,7 +32,6 @@ public class ProductController {
             Authentication authentication,
             @RequestParam(value = "keyword", required = false) String keyword) {
 
-        // 处理用户未登录的情况
         String username = "游客";
         if (authentication != null && authentication.isAuthenticated()) {
             username = authentication.getName();
@@ -50,7 +49,6 @@ public class ProductController {
             Model model,
             Authentication authentication) {
         try {
-            // 处理用户信息
             String username = "游客";
             User user = null;
 
@@ -59,13 +57,11 @@ public class ProductController {
                 user = userService.findByUsername(username);
             }
 
-            // 获取商品信息
             Product product = productService.getProductById(id);
             if (product == null) {
                 return "redirect:/products";
             }
 
-            // 如果用户已登录，记录活动日志
             if (user != null) {
                 activityLogService.logActivity(
                         user,
@@ -74,13 +70,11 @@ public class ProductController {
                 );
             }
 
-            // 添加商品信息和用户信息到模型
             model.addAttribute("product", product);
             model.addAttribute("username", username);
 
             return "product-detail";
         } catch (Exception e) {
-            // 如果出错，重定向到商品列表页
             return "redirect:/products";
         }
     }

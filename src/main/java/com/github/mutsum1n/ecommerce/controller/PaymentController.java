@@ -38,7 +38,6 @@ public class PaymentController {
                                   RedirectAttributes redirectAttributes) {
         String username = authentication.getName();
         try {
-            // 获取当前用户的购物车商品
             var cartItems = cartService.getCartItems(username);
 
             if (cartItems.isEmpty()) {
@@ -46,22 +45,17 @@ public class PaymentController {
                 return "redirect:/cart";
             }
 
-            // 创建订单并发送确认邮件
             Order order = orderService.createOrderAndSendEmail(
                     username,
                     cartItems,
-                    "默认收货地址",  // 实际项目中应从表单获取
-                    "在线支付"      // 实际项目中应根据支付方式确定
+                    "默认收货地址",
+                    "在线支付"
             );
 
-            // 清空购物车
             cartService.clearCart(username);
-
-            // 重定向到订单页面，显示成功消息
             redirectAttributes.addFlashAttribute("success",
                     String.format("支付成功！订单号：%s，我们已发送确认邮件到您的邮箱。", order.getOrderNumber()));
             return "redirect:/buyer";
-
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "支付失败: " + e.getMessage());

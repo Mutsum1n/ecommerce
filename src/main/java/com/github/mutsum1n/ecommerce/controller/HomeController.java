@@ -8,7 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        // 将根路径重定向到商品页面
         return "redirect:/products";
     }
 }

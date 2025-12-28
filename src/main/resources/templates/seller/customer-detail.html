@@ -45,7 +45,6 @@
         <div></div>
     </div>
 
-    <!-- 客户基本信息卡片 -->
     <div class="card customer-info-card">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">客户基本信息</h5>
@@ -290,7 +289,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 活动日志筛选功能
         const showAllLogsBtn = document.getElementById('showAllLogs');
         const showViewLogsBtn = document.getElementById('showViewLogs');
         const showPurchaseLogsBtn = document.getElementById('showPurchaseLogs');
@@ -320,7 +318,6 @@
                     }
                 });
 
-                // 更新按钮状态
                 [showAllLogsBtn, showViewLogsBtn, showPurchaseLogsBtn].forEach(btn => {
                     btn.classList.remove('active');
                 });
@@ -335,7 +332,6 @@
             showPurchaseLogsBtn.addEventListener('click', () => filterLogs('purchase'));
         }
 
-        // 显示来自控制器Flash属性的消息
         const successMessage = document.querySelector('.alert-success');
         const errorMessage = document.querySelector('.alert-danger');
 
@@ -346,7 +342,6 @@
             showFixedAlert('danger', errorMessage.querySelector('span').innerHTML);
         }
 
-        // 显示来自URL参数的消息
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('success')) {
             const successMsg = decodeURIComponent(urlParams.get('success'));
@@ -357,7 +352,6 @@
             showFixedAlert('danger', errorMsg);
         }
 
-        // 自动关闭页面内的警告消息
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(alert => {
             setTimeout(() => {
@@ -381,7 +375,6 @@
 
             alertContainer.appendChild(alertDiv);
 
-            // 5秒后自动关闭
             setTimeout(() => {
                 if (alertDiv.parentNode) {
                     const bsAlert = new bootstrap.Alert(alertDiv);
@@ -389,7 +382,6 @@
                 }
             }, 5000);
 
-            // 点击关闭按钮时移除
             alertDiv.querySelector('.btn-close').addEventListener('click', function() {
                 setTimeout(() => {
                     if (alertDiv.parentNode) {
