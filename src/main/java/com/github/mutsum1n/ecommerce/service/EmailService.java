@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);  // 添加这行
+
     private final JavaMailSender mailSender;
 
     @Value("${app.mail.enabled:true}")
@@ -28,10 +31,16 @@ public class EmailService {
     public void sendOrderConfirmation(String toEmail, String orderNumber,
                                       String customerName, String totalAmount, String orderDate) {
         try {
+            log.info("尝试发送邮件给: {}, 订单号: {}", toEmail, orderNumber);
             sendRealEmail(toEmail, orderNumber, customerName, totalAmount, orderDate);
+            log.info("邮件发送成功: {}", toEmail);
         } catch (Exception e) {
+            log.error("邮件发送失败 - 收件人: {}, 订单: {}, 错误: {}",
+                    toEmail, orderNumber, e.getMessage(), e);
+            throw new RuntimeException("邮件发送失败: " + e.getMessage(), e);
         }
     }
+
 
     private void sendRealEmail(String toEmail, String orderNumber,
                                String customerName, String totalAmount, String orderDate) {

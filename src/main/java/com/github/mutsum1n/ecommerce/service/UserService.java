@@ -54,10 +54,6 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("用户不存在：" + username));
     }
 
-    public List<User> getAllBuyers() {
-        return userRepository.findByRole("BUYER");
-    }
-
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("用户不存在：" + id));
@@ -68,16 +64,6 @@ public class UserService implements UserDetailsService {
         User user = getUserById(userId);
         user.setRole(role);
         userRepository.save(user);
-    }
-
-    public User getCurrentUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("用户不存在"));
-    }
-
-    public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
     }
 
     @Transactional

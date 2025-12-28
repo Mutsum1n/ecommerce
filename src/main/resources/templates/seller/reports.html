@@ -93,27 +93,32 @@
                         <tr>
                             <td><span class="badge bg-info">已付款</span></td>
                             <td th:text="${orderStats.paidOrders}">0</td>
-                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal(orderStats.paidOrders / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.paidOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
                         </tr>
                         <tr>
                             <td><span class="badge bg-primary">已发货</span></td>
                             <td th:text="${orderStats.shippedOrders}">0</td>
-                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal(orderStats.shippedOrders / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.shippedOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
                         </tr>
                         <tr>
                             <td><span class="badge bg-success">已送达</span></td>
                             <td th:text="${orderStats.deliveredOrders}">0</td>
-                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal(orderStats.deliveredOrders / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.deliveredOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge bg-success" style="background-color: #28a745 !important;">已完成</span></td>
+                            <td th:text="${orderStats.completedOrders}">0</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.completedOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
                         </tr>
                         <tr>
                             <td><span class="badge bg-danger">已取消</span></td>
                             <td th:text="${orderStats.cancelledOrders}">0</td>
-                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal(orderStats.cancelledOrders / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.cancelledOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
                         </tr>
                         <tr>
                             <td><span class="badge bg-warning">已退款</span></td>
                             <td th:text="${orderStats.refundedOrders}">0</td>
-                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal(orderStats.refundedOrders / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
+                            <td th:text="${orderStats.totalOrders > 0 ? #numbers.formatDecimal((orderStats.refundedOrders * 1.0) / orderStats.totalOrders * 100, 1, 2) : 0} + '%'">0%</td>
                         </tr>
                         <tr class="table-secondary">
                             <td><strong>总计</strong></td>

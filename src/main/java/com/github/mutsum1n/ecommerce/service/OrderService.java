@@ -3,6 +3,8 @@ package com.github.mutsum1n.ecommerce.service;
 import com.github.mutsum1n.ecommerce.entity.*;
 import com.github.mutsum1n.ecommerce.repository.OrderRepository;
 import com.github.mutsum1n.ecommerce.repository.OrderItemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +75,15 @@ public class OrderService {
                     orderItem.setSubtotal(cartItem.getProduct().getPrice()
                             .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
 
+                    // 强制设置卖家ID
+                    if (cartItem.getProduct().getSeller() != null) {
+                        orderItem.setSeller(cartItem.getProduct().getSeller());
+                    } else {
+                        // 如果商品没有卖家，设为当前用户（通常是买家）
+                        // 但这不应该发生，商品必须有卖家
+                        orderItem.setSeller(cartItem.getProduct().getSeller());
+                    }
+
                     Product product = cartItem.getProduct();
                     if (product.getStock() < cartItem.getQuantity()) {
                         throw new RuntimeException("商品库存不足: " + product.getName());
@@ -91,7 +102,7 @@ public class OrderService {
 
         return savedOrder;
     }
-
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
     @Transactional
     public Order createOrderAndSendEmail(String username, List<CartItem> cartItems,
                                          String shippingAddress, String paymentMethod) {
@@ -100,6 +111,7 @@ public class OrderService {
         User user = order.getUser();
 
         if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            log.warn("用户 {} 没有邮箱，跳过邮件发送", user.getUsername());
             return order;
         }
 
@@ -107,6 +119,9 @@ public class OrderService {
             String customerName = user.getFullName() != null ? user.getFullName() : user.getUsername();
             String totalAmount = "¥" + order.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP);
             String orderDate = order.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+            log.info("为订单 {} 发送确认邮件给用户 {} ({})",
+                    order.getOrderNumber(), user.getUsername(), user.getEmail());
 
             emailService.sendOrderConfirmation(
                     user.getEmail(),
@@ -116,9 +131,11 @@ public class OrderService {
                     orderDate
             );
 
+            log.info("订单 {} 的邮件已成功发送", order.getOrderNumber());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("发送订单 {} 的邮件失败，但不影响订单创建: {}",
+                    order.getOrderNumber(), e.getMessage(), e);
         }
 
         return order;
@@ -128,6 +145,10 @@ public class OrderService {
         String datePart = LocalDate.now().toString().replace("-", "");
         String randomPart = String.format("%06d", (int)(Math.random() * 1000000));
         return "ORD" + datePart + randomPart;
+    }
+
+    public List<Order> getOrdersBySeller(Long sellerId) {
+        return orderRepository.findBySellerId(sellerId);
     }
 
     public List<Order> getUserOrders(String username) {
@@ -156,10 +177,6 @@ public class OrderService {
         }
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
     public Map<String, Long> getOrderStatistics() {
         return Map.of(
                 "totalOrders", orderRepository.count(),
@@ -169,11 +186,6 @@ public class OrderService {
                 "cancelledOrders", orderRepository.countByStatus(OrderStatus.CANCELLED),
                 "refundedOrders", orderRepository.countByStatus(OrderStatus.REFUNDED)
         );
-    }
-
-    public BigDecimal getSalesRevenue(LocalDateTime startDate, LocalDateTime endDate) {
-        BigDecimal revenue = orderRepository.sumTotalAmountBetweenDates(startDate, endDate);
-        return revenue != null ? revenue : BigDecimal.ZERO;
     }
 
     public Order getOrderById(Long id) {

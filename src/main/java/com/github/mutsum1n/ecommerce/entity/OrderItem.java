@@ -32,6 +32,10 @@ public class OrderItem {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private User seller;
+
     @PrePersist
     protected void onCreate() {
         if (subtotal == null && unitPrice != null && quantity != null) {
