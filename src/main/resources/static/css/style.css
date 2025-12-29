@@ -57,6 +57,22 @@
   --bs-btn-disabled-border-color: var(--bs-primary);
 }
 
+.error-tooltip {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    z-index: 1000;
+    max-width: 400px;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
 .btn-outline-primary {
   --bs-btn-color: var(--bs-primary);
   --bs-btn-border-color: var(--bs-primary);

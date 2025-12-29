@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
@@ -65,13 +64,11 @@ public class SellerController {
     public String saveProduct(@ModelAttribute Product product, Authentication authentication) {
         String username = authentication.getName();
         User seller = userService.findByUsername(username);
-
         if (product.getId() == null) {
             productService.saveProductForSeller(product, seller);
         } else {
             productService.updateProduct(product.getId(), product);
         }
-
         return "redirect:/seller/products";
     }
 
@@ -104,7 +101,6 @@ public class SellerController {
     public String manageOrders(Model model, Authentication authentication) {
         String username = authentication.getName();
         User seller = userService.findByUsername(username);
-
         List<Order> orders = orderService.getOrdersBySeller(seller.getId());
         model.addAttribute("orders", orders);
         model.addAttribute("username", username);
@@ -142,11 +138,8 @@ public class SellerController {
     public String salesReport(Model model, Authentication authentication) {
         String username = authentication.getName();
         User seller = userService.findByUsername(username);
-
-        // 获取当前卖家的所有订单
         List<Order> sellerOrders = orderService.getOrdersBySeller(seller.getId());
 
-        // 计算各种状态的订单数量
         long totalOrders = sellerOrders.size();
         long paidOrders = sellerOrders.stream().filter(o -> o.getStatus() == OrderStatus.PAID).count();
         long shippedOrders = sellerOrders.stream().filter(o -> o.getStatus() == OrderStatus.SHIPPED).count();
@@ -155,7 +148,6 @@ public class SellerController {
         long cancelledOrders = sellerOrders.stream().filter(o -> o.getStatus() == OrderStatus.CANCELLED).count();
         long refundedOrders = sellerOrders.stream().filter(o -> o.getStatus() == OrderStatus.REFUNDED).count();
 
-        // 构建 orderStats Map
         Map<String, Long> orderStats = new HashMap<>();
         orderStats.put("totalOrders", totalOrders);
         orderStats.put("paidOrders", paidOrders);
@@ -165,7 +157,6 @@ public class SellerController {
         orderStats.put("cancelledOrders", cancelledOrders);
         orderStats.put("refundedOrders", refundedOrders);
 
-        // 初始化营业额统计
         BigDecimal todayRevenue = BigDecimal.ZERO;
         BigDecimal weekRevenue = BigDecimal.ZERO;
         BigDecimal monthRevenue = BigDecimal.ZERO;
@@ -176,21 +167,17 @@ public class SellerController {
         LocalDateTime weekStart = LocalDate.now().minusDays(7).atStartOfDay();
         LocalDateTime monthStart = LocalDate.now().withDayOfMonth(1).atStartOfDay();
 
-        // 遍历当前卖家的所有订单
         for (Order order : sellerOrders) {
-            // 排除已取消和已退款的订单
             if (order.getStatus() == OrderStatus.CANCELLED || order.getStatus() == OrderStatus.REFUNDED) {
                 continue;
             }
-
-            // 获取订单中属于当前卖家的所有订单项
             List<OrderItem> sellerItems = order.getOrderItems().stream()
                     .filter(item -> item.getSeller() != null &&
                             item.getSeller().getId().equals(seller.getId()))
                     .collect(Collectors.toList());
 
             if (sellerItems.isEmpty()) {
-                continue; // 如果没有你的商品，跳过
+                continue;
             }
 
             BigDecimal sellerAmountInOrder = sellerItems.stream()
@@ -200,7 +187,6 @@ public class SellerController {
             LocalDateTime orderCreatedAt = order.getCreatedAt();
 
             totalRevenue = totalRevenue.add(sellerAmountInOrder);
-
 
             if (orderCreatedAt.isAfter(todayStart) && orderCreatedAt.isBefore(todayEnd)) {
                 todayRevenue = todayRevenue.add(sellerAmountInOrder);
@@ -212,14 +198,12 @@ public class SellerController {
                 monthRevenue = monthRevenue.add(sellerAmountInOrder);
             }
         }
-
         model.addAttribute("orderStats", orderStats);
         model.addAttribute("todayRevenue", todayRevenue);
         model.addAttribute("weekRevenue", weekRevenue);
         model.addAttribute("monthRevenue", monthRevenue);
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("username", username);
-
         return "seller/reports";
     }
 
@@ -227,14 +211,11 @@ public class SellerController {
     public String manageCustomers(Model model, Authentication authentication) {
         String username = authentication.getName();
         User seller = userService.findByUsername(username);
-
         List<Order> sellerOrders = orderService.getOrdersBySeller(seller.getId());
-
         Set<User> customers = new LinkedHashSet<>();
         for (Order order : sellerOrders) {
             customers.add(order.getUser());
         }
-
         model.addAttribute("customers", new ArrayList<>(customers));
         model.addAttribute("username", username);
         return "seller/customers";
@@ -245,7 +226,6 @@ public class SellerController {
         User customer = userService.getUserById(id);
         List<Order> customerOrders = orderService.getUserOrders(customer.getUsername());
         List<UserActivityLog> customerActivities = activityLogService.getUserActivities(customer.getUsername());
-
         model.addAttribute("customer", customer);
         model.addAttribute("orders", customerOrders);
         model.addAttribute("activities", customerActivities);

@@ -1,5 +1,8 @@
 package com.github.mutsum1n.ecommerce.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
     PAID("已付款"),
     SHIPPED("已发货"),
@@ -14,7 +17,4 @@ public enum OrderStatus {
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
 }

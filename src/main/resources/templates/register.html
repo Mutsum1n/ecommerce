@@ -6,24 +6,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="/css/style.css" rel="stylesheet">
-    <style>
-        /* 错误提示框样式 */
-        .error-tooltip {
-            position: fixed;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #dc3545;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 14px;
-            z-index: 1000;
-            max-width: 400px;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-    </style>
 </head>
 <body style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -106,7 +88,6 @@
         </form>
     </div>
 </div>
-<!-- 错误提示框 -->
 <div id="errorTooltip" class="error-tooltip"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -123,13 +104,11 @@
     }
     selectRole('BUYER');
 
-    // 显示错误提示框
     function showErrorTooltip(message) {
         const tooltip = document.getElementById('errorTooltip');
         tooltip.textContent = message;
         tooltip.style.display = 'block';
 
-        // 3秒后自动隐藏
         setTimeout(() => {
             tooltip.style.display = 'none';
         }, 3000);
@@ -145,7 +124,6 @@
             return false;
         }
 
-        // 验证其他必填字段
         const username = document.getElementById('username').value;
         const fullName = document.getElementById('fullName').value;
         const role = document.getElementById('role').value;
@@ -174,7 +152,6 @@
             return false;
         }
 
-        // 邮箱格式验证（可选）
         const email = document.getElementById('email').value;
         if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             event.preventDefault();
@@ -182,7 +159,6 @@
             return false;
         }
 
-        // 手机号格式验证（可选）
         const phone = document.getElementById('phone').value;
         if (phone && !/^1[3-9]\d{9}$/.test(phone)) {
             event.preventDefault();

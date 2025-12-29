@@ -49,7 +49,6 @@ public class OrderController {
             if (cartItems.isEmpty()) {
                 return "redirect:/cart";
             }
-
             Order order = orderService.createOrderAndSendEmail(username, cartItems,
                     shippingAddress, paymentMethod);
             cartService.clearCart(username);

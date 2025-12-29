@@ -75,12 +75,9 @@ public class OrderService {
                     orderItem.setSubtotal(cartItem.getProduct().getPrice()
                             .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
 
-                    // 强制设置卖家ID
                     if (cartItem.getProduct().getSeller() != null) {
                         orderItem.setSeller(cartItem.getProduct().getSeller());
                     } else {
-                        // 如果商品没有卖家，设为当前用户（通常是买家）
-                        // 但这不应该发生，商品必须有卖家
                         orderItem.setSeller(cartItem.getProduct().getSeller());
                     }
 
@@ -102,7 +99,7 @@ public class OrderService {
 
         return savedOrder;
     }
-    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
+
     @Transactional
     public Order createOrderAndSendEmail(String username, List<CartItem> cartItems,
                                          String shippingAddress, String paymentMethod) {
@@ -111,32 +108,20 @@ public class OrderService {
         User user = order.getUser();
 
         if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
-            log.warn("用户 {} 没有邮箱，跳过邮件发送", user.getUsername());
             return order;
         }
 
-        try {
-            String customerName = user.getFullName() != null ? user.getFullName() : user.getUsername();
-            String totalAmount = "¥" + order.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP);
-            String orderDate = order.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String customerName = user.getFullName() != null ? user.getFullName() : user.getUsername();
+        String totalAmount = "¥" + order.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP);
+        String orderDate = order.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-            log.info("为订单 {} 发送确认邮件给用户 {} ({})",
-                    order.getOrderNumber(), user.getUsername(), user.getEmail());
-
-            emailService.sendOrderConfirmation(
-                    user.getEmail(),
-                    order.getOrderNumber(),
-                    customerName,
-                    totalAmount,
-                    orderDate
-            );
-
-            log.info("订单 {} 的邮件已成功发送", order.getOrderNumber());
-
-        } catch (Exception e) {
-            log.error("发送订单 {} 的邮件失败，但不影响订单创建: {}",
-                    order.getOrderNumber(), e.getMessage(), e);
-        }
+        emailService.sendOrderConfirmation(
+                user.getEmail(),
+                order.getOrderNumber(),
+                customerName,
+                totalAmount,
+                orderDate
+        );
 
         return order;
     }

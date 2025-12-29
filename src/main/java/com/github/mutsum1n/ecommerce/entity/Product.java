@@ -38,10 +38,6 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public boolean isAvailable() {
-        return this.stock > 0 && Boolean.TRUE.equals(this.available);
-    }
-
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

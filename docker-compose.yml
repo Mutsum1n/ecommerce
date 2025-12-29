@@ -11,7 +11,6 @@ services:
       - ./h2-data:/data
     networks:
       - ecommerce-network
-
 networks:
   ecommerce-network:
     driver: bridge

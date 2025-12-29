@@ -11,18 +11,10 @@ import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
-    private static final Logger log = LoggerFactory.getLogger(EmailService.class);  // 添加这行
-
     private final JavaMailSender mailSender;
-
-    @Value("${app.mail.enabled:true}")
-    private boolean mailEnabled;
 
     @Value("${app.mail.from:noreply@ecommerce.com}")
     private String fromEmail;
-
-    @Value("${app.name:黄瓜网}")
-    private String appName;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -30,20 +22,6 @@ public class EmailService {
 
     public void sendOrderConfirmation(String toEmail, String orderNumber,
                                       String customerName, String totalAmount, String orderDate) {
-        try {
-            log.info("尝试发送邮件给: {}, 订单号: {}", toEmail, orderNumber);
-            sendRealEmail(toEmail, orderNumber, customerName, totalAmount, orderDate);
-            log.info("邮件发送成功: {}", toEmail);
-        } catch (Exception e) {
-            log.error("邮件发送失败 - 收件人: {}, 订单: {}, 错误: {}",
-                    toEmail, orderNumber, e.getMessage(), e);
-            throw new RuntimeException("邮件发送失败: " + e.getMessage(), e);
-        }
-    }
-
-
-    private void sendRealEmail(String toEmail, String orderNumber,
-                               String customerName, String totalAmount, String orderDate) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");

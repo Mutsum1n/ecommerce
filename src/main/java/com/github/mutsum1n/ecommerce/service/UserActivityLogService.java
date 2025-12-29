@@ -5,7 +5,6 @@ import com.github.mutsum1n.ecommerce.entity.UserActivityLog;
 import com.github.mutsum1n.ecommerce.repository.UserActivityLogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,11 +43,5 @@ public class UserActivityLogService {
     public List<UserActivityLog> getUserActivities(String username) {
         User user = userService.findByUsername(username);
         return activityLogRepository.findByUserOrderByCreatedAtDesc(user);
-    }
-
-    public Long getTodayActiveUsers() {
-        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = LocalDateTime.now().toLocalDate().atTime(23, 59, 59);
-        return activityLogRepository.countDistinctUsersByActivityDate(startOfDay, endOfDay);
     }
 }

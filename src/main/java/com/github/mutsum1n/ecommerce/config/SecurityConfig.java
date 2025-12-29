@@ -26,11 +26,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/register", "/error", "/css/**", "/js/**", "/products/**").permitAll()
-
                         .requestMatchers("/cart/**", "/buyer/**", "/payment/**").hasRole("BUYER")
-
                         .requestMatchers("/seller/**").hasRole("SELLER")
-
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -47,7 +44,6 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
-
         return http.build();
     }
 }

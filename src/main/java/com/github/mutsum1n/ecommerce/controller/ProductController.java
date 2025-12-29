@@ -31,7 +31,6 @@ public class ProductController {
             Model model,
             Authentication authentication,
             @RequestParam(value = "keyword", required = false) String keyword) {
-
         String username = "游客";
         if (authentication != null && authentication.isAuthenticated()) {
             username = authentication.getName();

@@ -63,14 +63,14 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="card stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+            <div class="card stat-card" style="background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="stat-value" th:text="${activeUsersToday}">0</div>
-                            <div class="stat-label">今日活跃用户</div>
+                            <div class="stat-value" th:text="'¥' + ${#numbers.formatDecimal(totalRevenue, 1, 2)}">¥0</div>
+                            <div class="stat-label">总销售额</div>
                         </div>
-                        <div class="stat-icon"><i class="bi bi-people"></i></div>
+                        <div class="stat-icon"><i class="bi bi-trophy-fill"></i></div>
                     </div>
                 </div>
             </div>
