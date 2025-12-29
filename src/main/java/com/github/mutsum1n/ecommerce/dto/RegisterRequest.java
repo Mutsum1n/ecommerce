@@ -4,9 +4,10 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
 @Getter
 public class RegisterRequest {
-    @Setter
+
     @NotBlank(message = "用户名不能为空")
     @Size(min = 3, max = 20, message = "用户名长度必须在3-20个字符之间")
     private String username;
@@ -27,7 +28,6 @@ public class RegisterRequest {
     @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号码格式不正确")
     private String phone;
 
-    @Setter
     @NotBlank(message = "请选择角色")
     private String role; // BUYER 或 SELLER
 
@@ -43,4 +43,5 @@ public class RegisterRequest {
         this.phone = phone;
         this.role = role;
     }
+
 }
