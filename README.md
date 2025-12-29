@@ -38,12 +38,14 @@
     DB_PASSWORD=your_db_password
     MAIL_USERNAME=your_e-mail
     MAIL_PASSWORD=your_password
-    
+    APP_URL=your_app_url
+    TZ=Asia/Shanghai
     # your_password是你的邮箱SMTP服务授权码
     EOF
 3. **构建镜像运行容器**
    ```bash
    docker compose -d --build
+
 ## 学生信息
 - 姓名:赖裕安  
 - 学号:202330450821
