@@ -5,6 +5,8 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     volumes:
       - ./src/main/resources/templates:/app/BOOT-INF/classes/templates
       - ./src/main/resources/static:/app/BOOT-INF/classes/static
