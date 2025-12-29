@@ -32,19 +32,18 @@
    ```bash
    git clone https://github.com/Mutsum1n/ecommerce
    cd ecommerce
-2. **构建镜像**
-   
-4. **配置环境变量**
+2. **配置环境变量**
     ```bash
     cat > .env << EOF
     DB_PASSWORD=your_db_password
     MAIL_USERNAME=your_e-mail
     MAIL_PASSWORD=your_password
+    
     # your_password是你的邮箱SMTP服务授权码
     EOF
-6. **运行容器**
-
-
+3. **构建镜像运行容器**
+   ```bash
+   docker compose -d --build
 ## 学生信息
 - 姓名:赖裕安  
 - 学号:202330450821
